@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { AppContext } from './App'
 import logo from './file.png'
 export default function Navbar() {
@@ -14,11 +14,11 @@ export default function Navbar() {
         <div className='navbar' style={{ height: '45px', borderBottom: '1px solid rgb(52 52 52)', backgroundColor: 'rgb(41 41 41)', display: 'flex', alignItems: 'center' }}>
             <div className="App" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                 <div className="left" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-                    <a href='/' style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', color: 'inherit', textDecoration: 'none' }} >
+                    <Link to='/' style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', color: 'inherit', textDecoration: 'none' }} >
                         <img style={{ width: '32px', marginRight: '9px' }} src={logo} alt="" />
                         <h3 style={{ letterSpacing: '0.98px' }}>PASTEDEN</h3>
-                    </a>
-                    <a href='/' style={{ backgroundColor: '#61ba65', color: 'white', border: 'none', outline: 'none', padding: '4.5px 10px', borderRadius: '4px', cursor: 'pointer', fontSize: '11px', marginLeft: '22px', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', textDecoration: 'none' }}><span style={{ fontSize: '14px', fontWeight: 'bold', marginRight: '5px' }}>+</span>paste</a>
+                    </Link>
+                    <link to='/' style={{ backgroundColor: '#61ba65', color: 'white', border: 'none', outline: 'none', padding: '4.5px 10px', borderRadius: '4px', cursor: 'pointer', fontSize: '11px', marginLeft: '22px', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', textDecoration: 'none' }}><span style={{ fontSize: '14px', fontWeight: 'bold', marginRight: '5px' }}>+</span>paste</link>
                 </div>
                 <div className="right">
                     <div className="sameline" style={{ display: 'flex', flexDirection: 'row' }}>
