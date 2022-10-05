@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import toast, { Toaster } from 'react-hot-toast'
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, where, query, getDocs } from "firebase/firestore";
 import { db } from './config';
 import cryptoRandomString from 'crypto-random-string';
 import { useNavigate } from 'react-router-dom';
@@ -25,27 +25,51 @@ export const Paste = () => {
             });
         }
         setDisable(true)
-        const newId = cryptoRandomString({ length: 6 })
-        const userExist = context.auth
-        const docRef = await addDoc(collection(db, "paste"), {
-            data: data,
-            dislike: 0,
-            id: id ? id : newId,
-            like: 0,
-            password: password ? password : null,
-            protected: password !== '',
-            timestamp: new Date().toString(),
-            uid: userExist ? userExist.currentUser.uid : null,
-            username: userExist ? userExist.currentUser.email : `guest${cryptoRandomString({ length: 5 })}`,
-            views: 0
-        });
-        setDisable(false)
-        if (docRef.id) {
-            navigate(`/${id ? id : newId}`)
+        const pasteRef = collection(db, "paste");
+        const q = query(pasteRef, where("id", "==", id));
+        let found = false;
+        async function get() {
+            const querySnapshot = await getDocs(q);
+            querySnapshot.forEach((doc) => {
+                const resp = doc.data();
+                console.log(resp);
+                if (resp.id === id) {
+                    found = true
+                }
+            });
+            if (found) {
+                return toast.error(`You cannot create a paste with ${id}.`, {
+                    duration: 4000,
+                    style: {
+                        fontSize: '11.75px',
+                        fontFamily: 'Poppind'
+                    },
+                });
+            }
+            const newId = cryptoRandomString({ length: 6 })
+            const userExist = context.auth
+            const docRef = await addDoc(collection(db, "paste"), {
+                data: data,
+                dislike: 0,
+                id: id ? id : newId,
+                like: 0,
+                password: password ? password : null,
+                protected: password !== '',
+                timestamp: new Date().toString(),
+                uid: userExist ? userExist.currentUser.uid : null,
+                username: userExist ? userExist.currentUser.email : `guest${cryptoRandomString({ length: 5 })}`,
+                views: 0
+            });
+            setDisable(false)
+            if (docRef.id) {
+                navigate(`/${id ? id : newId}`)
+            }
         }
+        get()
+
     }
     return (
-        <div className='pastepage'>
+        <div className='pastepage' >
             <Toaster />
             <p style={{ marginBottom: '9px', fontSize: '12.5px', fontWeight: 'bold', color: '#ddd', letterSpacing: '0.68px', fontFamily: 'Poppins' }}>New Paste</p>
             <textarea value={data} onChange={e => setData(e.target.value)} placeholder='Paste Something' spellCheck={false}></textarea>

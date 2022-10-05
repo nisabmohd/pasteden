@@ -23,10 +23,10 @@ export default function Navbar() {
                 <div className="right">
                     <div className="sameline" style={{ display: 'flex', flexDirection: 'row' }}>
                         {
-                            !context.auth ? <> <button onClick={()=>navigate('/login')}  style={{ width: '80px', color: '#ddd', backgroundColor: 'rgb(56 55 55)', fontFamily: 'Poppins', border: 'none', outline: 'none', cursor: 'pointer', fontSize: '11.75px', padding: '5px 8px', borderRadius: '2px' }}>Login</button>
-                                <button onClick={()=>navigate('/signup')} style={{ width: '80px', marginLeft: '12px', color: '#ddd', backgroundColor: 'rgb(56 55 55)', fontFamily: 'Poppins', border: 'none', outline: 'none', cursor: 'pointer', fontSize: '11.75px', padding: '5px 8px', borderRadius: '2px' }}>Sign Up</button></> : <>
+                            !context.auth ? <> <button className='hide' onClick={()=>navigate('/login')}  style={{ width: '80px', color: '#ddd', backgroundColor: 'rgb(56 55 55)', fontFamily: 'Poppins', border: 'none', outline: 'none', cursor: 'pointer', fontSize: '11.75px', padding: '5px 8px', borderRadius: '2px' }}>Login</button>
+                                <button className='hide' onClick={()=>navigate('/signup')} style={{ width: '80px', marginLeft: '12px', color: '#ddd', backgroundColor: 'rgb(56 55 55)', fontFamily: 'Poppins', border: 'none', outline: 'none', cursor: 'pointer', fontSize: '11.75px', padding: '5px 8px', borderRadius: '2px' }}>Sign Up</button></> : <>
                                 <img src="https://firebasestorage.googleapis.com/v0/b/upload-pics-e599e.appspot.com/o/images%2Fguest.png?alt=media&token=8e691b33-b1ab-451e-b4d2-0257c76daa52" style={{ width: '30px', marginRight: '15px' }} alt="" />
-                                <p style={{ fontSize: '12px', marginTop: '9px' }}>Hello , <span style={{  }}>{context.auth.currentUser.email}</span></p>
+                                <p className='hide' style={{ fontSize: '12px', marginTop: '9px' }}>Hello , <span style={{  }}>{context.auth.currentUser.email}</span></p>
                                 <button onClick={()=>logout()} style={{ width: '80px', marginLeft: '12px', color: '#ddd', backgroundColor: 'rgb(56 55 55)', fontFamily: 'Poppins', border: 'none', outline: 'none', cursor: 'pointer', fontSize: '11.75px', padding: '5px 8px', borderRadius: '2px' }}>Log out</button>
 
                             </>

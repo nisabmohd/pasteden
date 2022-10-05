@@ -2,12 +2,14 @@ import React, { useContext, useState } from 'react'
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { AppContext } from './App';
 import toast, { Toaster } from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 const auth = getAuth();
 export const Signup = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const context = useContext(AppContext)
+  const navigate=useNavigate()
 
 
   async function signup() {
@@ -26,6 +28,7 @@ export const Signup = () => {
         // console.log(user);
         context.setAuth(user.auth)
         localStorage.setItem('auth', JSON.stringify(user.auth))
+        navigate('/')
       })
       .catch((error) => {
         const errorMessage = error.message;

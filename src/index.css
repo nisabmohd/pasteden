@@ -84,7 +84,7 @@ input {
   }
 
   .bg-dark {
-    width: 100% !important;
+    width: 92% !important;
     padding: 0;
   }
 }
@@ -93,6 +93,7 @@ input {
   .optional-box {
     display: flex;
     flex-direction: column !important;
+    height: 400px !important;
   }
 
   .left,
@@ -100,5 +101,10 @@ input {
     width: 100% !important;
     border: none !important;
 
+  }
+}
+@media screen and (max-width:494px){
+  .hide{
+    display: none;
   }
 }

@@ -74,7 +74,7 @@ export const View = () => {
         setDislikes(prev => prev + 1)
     }
     return (
-        <div className='viewpage'>
+        <div className='viewpage' >
             <Toaster />
             {
                 <textarea readonly="readonly" style={{ cursor: 'copy', height: '43vh' }} spellCheck={false} value={load ? "loading ...." : (!isprotected) ? data : 'Enter password below to unlock ..'}></textarea>
