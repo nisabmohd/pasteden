@@ -1,16 +1,20 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import toast, { Toaster } from 'react-hot-toast'
 import { collection, addDoc } from "firebase/firestore";
 import { db } from './config';
 import cryptoRandomString from 'crypto-random-string';
 import { useNavigate } from 'react-router-dom';
-
+import { AppContext } from './App'
 export const Paste = () => {
     const [data, setData] = useState('')
     const navigate = useNavigate()
+    const context = useContext(AppContext)
     const [id, setId] = useState('')
     const [password, setPassword] = useState('')
+    const [diable, setDisable] = useState(false)
+
     const newPaste = async () => {
+        if (diable) return
         if (!data) {
             return toast.error('You cannot create an empty paste.', {
                 duration: 4000,
@@ -20,8 +24,9 @@ export const Paste = () => {
                 },
             });
         }
+        setDisable(true)
         const newId = cryptoRandomString({ length: 6 })
-        const userExist = JSON.parse(localStorage.getItem('user'))
+        const userExist = context.auth
         const docRef = await addDoc(collection(db, "paste"), {
             data: data,
             dislike: 0,
@@ -30,10 +35,11 @@ export const Paste = () => {
             password: password ? password : null,
             protected: password !== '',
             timestamp: new Date().toString(),
-            uid: userExist ? userExist.uid : null,
-            username: userExist ? userExist.uid : `guest${cryptoRandomString({ length: 5 })}`,
+            uid: userExist ? userExist.currentUser.uid : null,
+            username: userExist ? userExist.currentUser.email : `guest${cryptoRandomString({ length: 5 })}`,
             views: 0
         });
+        setDisable(false)
         if (docRef.id) {
             navigate(`/${id ? id : newId}`)
         }
@@ -57,20 +63,22 @@ export const Paste = () => {
                         </tr>
                         <tr>
                             <td> </td>
-                            <button onClick={() => newPaste()} style={{ color: '#ddd', backgroundColor: 'rgb(56 55 55)', fontFamily: 'Poppins', border: 'none', outline: 'none', cursor: 'pointer', fontSize: '11.05px', padding: '7px 12px', borderRadius: '2px', marginTop: '15px', marginLeft: '9px' }}>Create New Paste</button>
+                            <button onClick={() => newPaste()} style={{ color: '#ddd', backgroundColor: 'rgb(56 55 55)', fontFamily: 'Poppins', border: 'none', outline: 'none', cursor: diable ? 'not-allowed' : 'pointer', fontSize: '11.05px', padding: '7px 12px', borderRadius: '2px', marginTop: '15px', marginLeft: '9px' }}>Create New Paste</button>
                             <td></td>
                         </tr>
                     </table>
                 </div>
                 <div className="right" style={{ width: '50%' }}>
-                    <div className="wrapper" style={{ width: '95%', marginLeft: 'auto', paddingTop: '19px', display: 'flex', flexDirection: 'column' }}>
-                        <img src="https://firebasestorage.googleapis.com/v0/b/upload-pics-e599e.appspot.com/o/images%2Fguest.png?alt=media&token=8e691b33-b1ab-451e-b4d2-0257c76daa52" style={{ width: '45px' }} alt="" />
-                        <p style={{ fontSize: '12px', marginTop: '9px' }}>Hello <span style={{ fontWeight: 'bold' }}> Guest</span></p>
-                        <div className="sameline" style={{ display: 'flex', flexDirection: 'row', marginTop: '9px' }}>
-                            <button style={{ width: '80px', color: '#ddd', backgroundColor: 'rgb(56 55 55)', fontFamily: 'Poppins', border: 'none', outline: 'none', cursor: 'pointer', fontSize: '11.75px', padding: '5px 8px', borderRadius: '2px' }}>Login</button>
-                            <button style={{ width: '80px', marginLeft: '12px', color: '#ddd', backgroundColor: 'rgb(56 55 55)', fontFamily: 'Poppins', border: 'none', outline: 'none', cursor: 'pointer', fontSize: '11.75px', padding: '5px 8px', borderRadius: '2px' }}>Sign Up</button>
-                        </div>
-                        <button style={{ width: '195px', marginTop: '10px', color: '#ddd', backgroundColor: '#dd4b39 ', fontFamily: 'Poppins', border: 'none', outline: 'none', cursor: 'pointer', fontSize: '11.75px', padding: '5px 8px', borderRadius: '2px', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}><img src="https://firebasestorage.googleapis.com/v0/b/upload-pics-e599e.appspot.com/o/images%2Fgoogle-plus.png?alt=media&token=401c95d4-97f2-415f-adf6-f9aa22c148ab" alt="" style={{ width: '25px', marginRight: '9px' }}></img>Login with Google</button>
+                    <div className="wrapper" style={{ width: '95%', marginLeft: 'auto', paddingTop: '19px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                        <img src="https://firebasestorage.googleapis.com/v0/b/upload-pics-e599e.appspot.com/o/images%2Fguest.png?alt=media&token=8e691b33-b1ab-451e-b4d2-0257c76daa52" style={{ width: '55px' }} alt="" />
+                        <p style={{ fontSize: '12px', marginTop: '9px' }}>Hello , <span style={{}}> {context.auth ? context.auth.currentUser.email : "Guest - Login or Signup"}</span></p>
+                        {
+                            !context.auth && (<><div className="sameline" style={{ display: 'flex', flexDirection: 'column', marginTop: '9px' }}>
+                                <button onClick={() => navigate('/login')} style={{ width: '250px', color: '#ddd', backgroundColor: 'rgb(56 55 55)', fontFamily: 'Poppins', border: 'none', outline: 'none', cursor: 'pointer', fontSize: '11.75px', padding: '5px 8px', borderRadius: '2px' }}>Login</button>
+                                <button onClick={() => navigate('/signup')} style={{ width: '250px', color: '#ddd', backgroundColor: 'rgb(56 55 55)', fontFamily: 'Poppins', border: 'none', outline: 'none', cursor: 'pointer', fontSize: '11.75px', padding: '5px 8px', borderRadius: '2px', marginTop: '14px' }}>Sign Up</button>
+                            </div></>)
+                        }
+
                     </div>
                 </div>
 
