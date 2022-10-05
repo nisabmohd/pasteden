@@ -122,10 +122,9 @@ export const View = () => {
                         </div>
                         {
                             !context.auth && (<><div className="sameline" style={{ display: 'flex', flexDirection: 'row', marginTop: '9px' }}>
-                                <button onClick={()=>navigate('/login')}  style={{ width: '80px', color: '#ddd', backgroundColor: 'rgb(56 55 55)', fontFamily: 'Poppins', border: 'none', outline: 'none', cursor: 'pointer', fontSize: '11.75px', padding: '5px 8px', borderRadius: '2px' }}>Login</button>
-                                <button onClick={()=>navigate('/signup')}  style={{ width: '80px', marginLeft: '12px', color: '#ddd', backgroundColor: 'rgb(56 55 55)', fontFamily: 'Poppins', border: 'none', outline: 'none', cursor: 'pointer', fontSize: '11.75px', padding: '5px 8px', borderRadius: '2px' }}>Sign Up</button>
-                            </div>
-                                <button style={{ width: '195px', marginTop: '10px', color: '#ddd', backgroundColor: '#dd4b39 ', fontFamily: 'Poppins', border: 'none', outline: 'none', cursor: 'pointer', fontSize: '11.75px', padding: '5px 8px', borderRadius: '2px', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}><img src="https://firebasestorage.googleapis.com/v0/b/upload-pics-e599e.appspot.com/o/images%2Fgoogle-plus.png?alt=media&token=401c95d4-97f2-415f-adf6-f9aa22c148ab" alt="" style={{ width: '25px', marginRight: '9px' }}></img>Login with Google</button></>)
+                                <button onClick={()=>navigate('/login')}  style={{ width: '135px', color: '#ddd', backgroundColor: 'rgb(56 55 55)', fontFamily: 'Poppins', border: 'none', outline: 'none', cursor: 'pointer', fontSize: '11.75px', padding: '5px 8px', borderRadius: '2px' }}>Login</button>
+                                <button onClick={()=>navigate('/signup')}  style={{ width: '135px', marginLeft: '12px', color: '#ddd', backgroundColor: 'rgb(56 55 55)', fontFamily: 'Poppins', border: 'none', outline: 'none', cursor: 'pointer', fontSize: '11.75px', padding: '5px 8px', borderRadius: '2px' }}>Sign Up</button>
+                            </div></>)
                         }
                     </div>
                 </div>
