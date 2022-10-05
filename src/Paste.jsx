@@ -38,7 +38,8 @@ export const Paste = () => {
                 }
             });
             if (found) {
-                return toast.error(`You cannot create a paste with ${id}.`, {
+                setDisable(false)
+                return toast.error(`You cannot create a paste with "${id}".`, {
                     duration: 4000,
                     style: {
                         fontSize: '11.75px',
