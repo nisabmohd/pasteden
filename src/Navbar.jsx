@@ -18,7 +18,7 @@ export default function Navbar() {
                         <img style={{ width: '32px', marginRight: '9px' }} src={logo} alt="" />
                         <h3 style={{ letterSpacing: '0.98px' }}>PASTEDEN</h3>
                     </Link>
-                    <link to='/' style={{ backgroundColor: '#61ba65', color: 'white', border: 'none', outline: 'none', padding: '4.5px 10px', borderRadius: '4px', cursor: 'pointer', fontSize: '11px', marginLeft: '22px', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', textDecoration: 'none' }}><span style={{ fontSize: '14px', fontWeight: 'bold', marginRight: '5px' }}>+</span>paste</link>
+                    <Link to='/' style={{ backgroundColor: '#61ba65', color: 'white', border: 'none', outline: 'none', padding: '4.5px 10px', borderRadius: '4px', cursor: 'pointer', fontSize: '11px', marginLeft: '22px', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', textDecoration: 'none' }}><span style={{ fontSize: '14px', fontWeight: 'bold', marginRight: '5px' }}>+</span>paste</Link>
                 </div>
                 <div className="right">
                     <div className="sameline" style={{ display: 'flex', flexDirection: 'row' }}>
