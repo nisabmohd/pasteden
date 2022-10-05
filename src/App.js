@@ -1,24 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import { Paste } from "./Paste";
+import { View } from "./View";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+} from "react-router-dom";
+import Navbar from "./Navbar";
+import { Footer } from "./Footer";
+import { createContext } from "react";
 
+const AppContext = createContext(null)
 function App() {
+  const contextValue={
+
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <AppContext.Provider value={contextValue} >
+        <Navbar />
+        <div className="App bg-dark" style={{}}>
+          <Routes>
+            <Route exact path="/" element={<Paste />} />
+            <Route exact path="/user/:uid" element={<></>} />
+            <Route exact path="/login" element={<></>} />
+            <Route exact path="/signup" element={<></>} />
+            <Route path="/:id" element={<View />} />
+          </Routes>
+        </div>
+        <Footer />
+      </AppContext.Provider>
+    </BrowserRouter>
   );
 }
 

@@ -1,3 +1,9 @@
+@import url('https://cdn-uicons.flaticon.com/uicons-solid-rounded/css/uicons-solid-rounded.css');
+@import url('https://cdn-uicons.flaticon.com/uicons-regular-rounded/css/uicons-regular-rounded.css');
+@import url('https://cdn-uicons.flaticon.com/uicons-regular-straight/css/uicons-regular-straight.css');
+@import url('https://cdn-uicons.flaticon.com/uicons-regular-straight/css/uicons-regular-straight.css');
+@import url('https://cdn-uicons.flaticon.com/uicons-bold-rounded/css/uicons-bold-rounded.css');
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -5,9 +11,95 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #2b2b2b;
+  color: #ddd;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+* {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', monospace;
+}
+
+.backwards {
+  -moz-transform: scale(-1, -1);
+  -webkit-transform: scale(-1, -1);
+  -o-transform: scale(-1, -1);
+  -ms-transform: scale(-1, -1);
+  transform: scale(-1, -1);
+}
+
+.App {
+  width: 60%;
+  margin: auto;
+}
+
+textarea {
+  resize: none;
+  overflow: auto;
+  width: 97%;
+  background-color: #2b2b2b;
+  color: #ddd;
+  height: 40vh;
+  border: 1px solid rgb(52 52 52);
+  outline: none;
+  padding: 12px;
+  border-radius: 2.12px;
+  font-size: 11.5px;
+}
+
+.pastepage {
+  display: flex;
+  flex-direction: column;
+}
+
+td {
+  padding: 10px 8px;
+}
+
+input {
+  background-color: transparent;
+  outline: none;
+  padding: 7.75px;
+  width: 320px;
+  border-radius: 1.5px;
+  border: 1px solid rgb(52 52 52);
+  font-size: 11.5px;
+  color: #ddd;
+}
+
+.bg-dark {
+  width: 58.5%;
+  background-color: #252525;
+  padding: 18px;
+  margin-bottom: 25px;
+  border-left: 1px solid rgb(52 52 52);
+  border-right: 1px solid rgb(52 52 52);
+  border-bottom: 1px solid rgb(52 52 52);
+}
+
+@media screen and (max-width:965px) {
+  .App {
+    width: 100%;
+    border: none;
+  }
+
+  .bg-dark {
+    width: 100% !important;
+    padding: 0;
+  }
+}
+
+@media screen and (max-width:545px) {
+  .optional-box {
+    display: flex;
+    flex-direction: column !important;
+  }
+
+  .left,
+  .right {
+    width: 100% !important;
+    border: none !important;
+
+  }
 }
