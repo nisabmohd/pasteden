@@ -3,17 +3,21 @@ import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { AppContext } from './App';
 import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import { addDoc, collection } from 'firebase/firestore';
+import { db } from './config';
+import { uid } from 'uid';
 
 const auth = getAuth();
 export const Signup = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [username, setUsername] = useState('')
   const context = useContext(AppContext)
-  const navigate=useNavigate()
+  const navigate = useNavigate()
 
 
   async function signup() {
-    if (!email || !password) {
+    if (!email || !password || !username) {
       return toast.error('Fill all credentials', {
         duration: 3000,
         style: {
@@ -25,10 +29,18 @@ export const Signup = () => {
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
-        // console.log(user);
-        context.setAuth(user.auth)
-        localStorage.setItem('auth', JSON.stringify(user.auth))
-        navigate('/')
+        const newEmail = user.auth.currentUser.email
+        const data = {
+          email: newEmail,
+          uid: uid(),
+          paste: [],
+          username: username
+        }
+        addDoc(collection(db, "user"), data).then(() => {
+          context.setAuth(data)
+          localStorage.setItem('auth', JSON.stringify(data))
+          navigate('/')
+        })
       })
       .catch((error) => {
         const errorMessage = error.message;
@@ -49,6 +61,10 @@ export const Signup = () => {
         <tr>
           <td><label htmlFor="email" style={{ fontSize: '11.5px' }}>Email:</label></td>
           <td> <input value={email} onChange={e => setEmail(e.target.value)} placeholder='Enter email' style={{ width: '100%' }} id="email" type="email" /></td>
+        </tr>
+        <tr>
+          <td><label htmlFor="username" style={{ fontSize: '11.5px' }}>Username:</label></td>
+          <td> <input value={username} onChange={e => setUsername(e.target.value)} placeholder='Enter username' style={{ width: '100%' }} id="username" type="text" /></td>
         </tr>
         <tr>
           <td> <label htmlFor="dencode" style={{ fontSize: '11.5px' }}>Password:</label></td>

@@ -1,14 +1,17 @@
 import React, { useContext, useState } from 'react'
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { collection,where, query, getDocs } from "firebase/firestore";
+
 import toast, { Toaster } from 'react-hot-toast';
 import { AppContext } from './App';
 import { useNavigate } from 'react-router-dom';
+import { db } from './config';
 const auth = getAuth();
 export const Login = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const context = useContext(AppContext)
-  const navigate=useNavigate()
+  const navigate = useNavigate()
 
   const login = async () => {
     if (!email || !password) {
@@ -23,10 +26,19 @@ export const Login = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
-        // console.log(user);
-        context.setAuth(user.auth)
-        localStorage.setItem('auth', JSON.stringify(user.auth))
-        navigate('/')
+        console.log(user);
+        const pasteRef = collection(db, "user");
+        const q = query(pasteRef, where("email", "==", email));
+        getDocs(q).then((s) => {
+          s.forEach((doc) => {
+            const resp = doc.data();
+            console.log(resp);
+            context.setAuth(resp)
+            localStorage.setItem('auth', JSON.stringify(resp))
+            navigate('/')
+          });
+        })
+
       })
       .catch((error) => {
         const errorMessage = error.message;

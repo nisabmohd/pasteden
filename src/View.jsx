@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { collection, doc, getDocs, query, setDoc, where } from "firebase/firestore";
 import { db } from './config'
 import toast, { Toaster } from 'react-hot-toast';
@@ -7,7 +7,7 @@ import { AppContext } from './App';
 
 export const View = () => {
     const params = useParams()
-    const navigate=useNavigate()
+    const navigate = useNavigate()
     const context = useContext(AppContext)
     const [load, setLoad] = useState(true)
     const [data, setData] = useState('')
@@ -40,7 +40,7 @@ export const View = () => {
         get()
 
     }, [params])
-    
+
     useEffect(() => {
         async function update() {
             await setDoc(doc(db, "paste", docid), {
@@ -76,20 +76,21 @@ export const View = () => {
     return (
         <div className='viewpage' >
             <Toaster />
+            <p style={{ marginBottom: '9px', fontSize: '12.5px', fontWeight: 'bold', color: '#ddd', letterSpacing: '0.68px', fontFamily: 'Poppins'}}>Preview</p>
             {
-                <textarea readonly="readonly" style={{ cursor: 'copy', height: '43vh' }} spellCheck={false} value={load ? "loading ...." : (!isprotected) ? data : 'Enter password below to unlock ..'}></textarea>
+                <textarea readOnly="readonly" style={{ cursor: 'copy', }} spellCheck={false} value={load ? "loading ...." : (!isprotected) ? data : 'Enter password below to unlock ..'}></textarea>
             }
-            <p style={{ marginBottom: '9px', fontSize: '12.5px', fontWeight: 'bold', color: '#ddd', letterSpacing: '0.68px', marginTop: '19px' }}>Paste Options</p>
+            <p style={{ marginBottom: '9px', fontSize: '12.5px', fontWeight: 'bold', color: '#ddd', letterSpacing: '0.68px', marginTop: '16px' }}>Paste Options</p>
             <div className="optional-box" style={{ display: 'flex', flexDirection: 'row', borderTop: '1px solid rgb(52 52 52)', paddingTop: '15px', height: '325px', marginBottom: '15px' }}>
                 <div className="left" style={{ width: '50%', borderRight: '1px solid rgb(52 52 52)' }}>
                     <table style={{ gap: '9px' }}>
                         <tr>
                             <td><label htmlFor="password" style={{ fontSize: '11.5px', marginRight: '10px' }}>Password:</label></td>
-                            <td> <input placeholder='Enter Password' readonly={!isprotected && "readonly"} value={password} onChange={(e) => setPassword(e.target.value)} style={{ backgroundColor: 'transparent', cursor: isprotected ? 'pointer' : 'not-allowed' }} id="password" type="text" /></td>
+                            <td> <input placeholder='Enter Password' readOnly={!isprotected && "readonly"} value={password} onChange={(e) => setPassword(e.target.value)} style={{ backgroundColor: 'transparent', cursor: isprotected ? 'pointer' : 'not-allowed' }} id="password" type="text" /></td>
                         </tr>
                         <tr>
                             <td> <label htmlFor="dencode" style={{ fontSize: '11.5px', marginRight: '10px' }}>Paste Name / Title:</label></td>
-                            <td> <input readonly="readonly" style={{ cursor: 'not-allowed' }} placeholder='Not Recommended' value={response && response.id} id="dencode" type="text" /></td>
+                            <td> <input readOnly="readonly" style={{ cursor: 'not-allowed' }} placeholder='Not Recommended' value={response && response.id} id="dencode" type="text" /></td>
                         </tr>
                         <tr>
                             <td> </td>
@@ -100,30 +101,36 @@ export const View = () => {
                 </div>
                 <div className="right" style={{ width: '50%' }}>
                     <div className="wrapper" style={{ width: '95%', marginLeft: 'auto', paddingTop: '19px', display: 'flex', flexDirection: 'column' }}>
-                        <div className="sameline" style={{ display: 'flex', flexDirection: 'row', marginTop: '1px', marginBottom: '15px' }}>
-                            <img src="https://firebasestorage.googleapis.com/v0/b/upload-pics-e599e.appspot.com/o/images%2Fguest.png?alt=media&token=8e691b33-b1ab-451e-b4d2-0257c76daa52" style={{ width: '45px', marginRight: '18px' }} alt="" />
-                            <p style={{ fontSize: '12px', marginTop: '9px' }}> From <span style={{ fontWeight: 'bold' }}> {response && response.username}</span></p>
-                        </div>
+                        {
+                            response && response.uid ? <Link to={`/user/${response.username + "=" + response.uid}`} className="sameline" style={{ display: 'flex', flexDirection: 'row', marginTop: '1px', marginBottom: '15px', textDecoration: 'none', color: 'inherit' }}>
+                                <img src="https://firebasestorage.googleapis.com/v0/b/upload-pics-e599e.appspot.com/o/images%2Fguest.png?alt=media&token=8e691b33-b1ab-451e-b4d2-0257c76daa52" style={{ width: '45px', marginRight: '18px' }} alt="" />
+                                <p style={{ fontSize: '12px', marginTop: '9px' }}> From <span style={{ fontWeight: 'bold' }}> {response && response.username}</span></p>
+                            </Link> : <div className="sameline" style={{ display: 'flex', flexDirection: 'row', marginTop: '1px', marginBottom: '15px', textDecoration: 'none', color: 'inherit' }}>
+                                <img src="https://firebasestorage.googleapis.com/v0/b/upload-pics-e599e.appspot.com/o/images%2Fguest.png?alt=media&token=8e691b33-b1ab-451e-b4d2-0257c76daa52" style={{ width: '45px', marginRight: '18px' }} alt="" />
+                                <p style={{ fontSize: '12px', marginTop: '9px' }}> From <span style={{ fontWeight: 'bold' }}> {response && response.username}</span></p>
+                            </div>
+                        }
+
                         <div className="sameline" style={{ display: 'flex', flexDirection: 'column', marginTop: '5px', marginBottom: '5px' }}>
                             <div className="timestamp" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-                                <i class="fi fi-rr-time-check"></i><p style={{ fontSize: '12px', marginLeft: '9px' }}> {response && response.timestamp.slice(0, 24)}</p>
+                                <i className="fi fi-rr-time-check"></i><p style={{ fontSize: '12px', marginLeft: '9px' }}> {response && response.timestamp.slice(0, 24)}</p>
                             </div>
                             <div className="sameline" style={{ display: 'flex', flexDirection: 'row', marginTop: '10px', marginBottom: '5px' }}>
                                 <div onClick={() => likehandle()} className="timestamp" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', cursor: context.auth ? 'pointer' : 'not-allowed' }}>
-                                    <i style={{ marginTop: '-8px' }} class="fi fi-rs-hand backwards"></i><p style={{ fontSize: '12px', marginLeft: '9px' }}> {likes}</p>
+                                    <i style={{ marginTop: '-8px' }} className="fi fi-rs-hand backwards"></i><p style={{ fontSize: '12px', marginLeft: '9px' }}> {likes}</p>
                                 </div>
                                 <div onClick={() => dislikehandle()} className="timestamp" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginLeft: '15px', cursor: context.auth ? 'pointer' : 'not-allowed' }}>
-                                    <i style={{ marginBottom: '-1px' }} class="fi fi-rs-hand"></i><p style={{ fontSize: '12px', marginLeft: '9px' }}> {dislikes}</p>
+                                    <i style={{ marginBottom: '-1px' }} className="fi fi-rs-hand"></i><p style={{ fontSize: '12px', marginLeft: '9px' }}> {dislikes}</p>
                                 </div>
                                 <div className="timestamp" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginLeft: '15px' }}>
-                                    <i style={{ marginBottom: '-1px' }} class="fi fi-rr-eye"></i><p style={{ fontSize: '12px', marginLeft: '9px' }}> {views}</p>
+                                    <i style={{ marginBottom: '-1px' }} className="fi fi-rr-eye"></i><p style={{ fontSize: '12px', marginLeft: '9px' }}> {views}</p>
                                 </div>
                             </div>
                         </div>
                         {
                             !context.auth && (<><div className="sameline" style={{ display: 'flex', flexDirection: 'row', marginTop: '9px' }}>
-                                <button onClick={()=>navigate('/login')}  style={{ width: '135px', color: '#ddd', backgroundColor: 'rgb(56 55 55)', fontFamily: 'Poppins', border: 'none', outline: 'none', cursor: 'pointer', fontSize: '11.75px', padding: '5px 8px', borderRadius: '2px' }}>Login</button>
-                                <button onClick={()=>navigate('/signup')}  style={{ width: '135px', marginLeft: '12px', color: '#ddd', backgroundColor: 'rgb(56 55 55)', fontFamily: 'Poppins', border: 'none', outline: 'none', cursor: 'pointer', fontSize: '11.75px', padding: '5px 8px', borderRadius: '2px' }}>Sign Up</button>
+                                <button onClick={() => navigate('/login')} style={{ width: '135px', color: '#ddd', backgroundColor: 'rgb(56 55 55)', fontFamily: 'Poppins', border: 'none', outline: 'none', cursor: 'pointer', fontSize: '11.75px', padding: '5px 8px', borderRadius: '2px' }}>Login</button>
+                                <button onClick={() => navigate('/signup')} style={{ width: '135px', marginLeft: '12px', color: '#ddd', backgroundColor: 'rgb(56 55 55)', fontFamily: 'Poppins', border: 'none', outline: 'none', cursor: 'pointer', fontSize: '11.75px', padding: '5px 8px', borderRadius: '2px' }}>Sign Up</button>
                             </div></>)
                         }
                     </div>

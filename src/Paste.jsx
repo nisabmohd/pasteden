@@ -3,8 +3,9 @@ import toast, { Toaster } from 'react-hot-toast'
 import { collection, addDoc, where, query, getDocs } from "firebase/firestore";
 import { db } from './config';
 import cryptoRandomString from 'crypto-random-string';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AppContext } from './App'
+
 export const Paste = () => {
     const [data, setData] = useState('')
     const navigate = useNavigate()
@@ -57,8 +58,8 @@ export const Paste = () => {
                 password: password ? password : null,
                 protected: password !== '',
                 timestamp: new Date().toString(),
-                uid: userExist ? userExist.currentUser.uid : null,
-                username: userExist ? userExist.currentUser.email : `guest${cryptoRandomString({ length: 5 })}`,
+                uid: userExist ? userExist.uid : null,
+                username: userExist ? userExist.username : `guest${cryptoRandomString({ length: 5 })}`,
                 views: 0
             });
             setDisable(false)
@@ -95,8 +96,16 @@ export const Paste = () => {
                 </div>
                 <div className="right" style={{ width: '50%' }}>
                     <div className="wrapper" style={{ width: '95%', marginLeft: 'auto', paddingTop: '19px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-                        <img src="https://firebasestorage.googleapis.com/v0/b/upload-pics-e599e.appspot.com/o/images%2Fguest.png?alt=media&token=8e691b33-b1ab-451e-b4d2-0257c76daa52" style={{ width: '55px' }} alt="" />
-                        <p style={{ fontSize: '12px', marginTop: '9px' }}>Hello , <span style={{}}> {context.auth ? context.auth.currentUser.email : "Guest - Login or Signup"}</span></p>
+                        {
+                            context.auth ? <Link to={`/user/${context.auth.username+"="+context.auth.uid}`} style={{textDecoration:'none',color:'inherit'}}>
+                                <img src="https://firebasestorage.googleapis.com/v0/b/upload-pics-e599e.appspot.com/o/images%2Fguest.png?alt=media&token=8e691b33-b1ab-451e-b4d2-0257c76daa52" style={{ width: '55px' }} alt="" />
+                                <p style={{ fontSize: '12px', marginTop: '9px' }}>Hello , <span style={{}}> {context.auth.username}</span></p>
+                            </Link> : <>
+                                <img src="https://firebasestorage.googleapis.com/v0/b/upload-pics-e599e.appspot.com/o/images%2Fguest.png?alt=media&token=8e691b33-b1ab-451e-b4d2-0257c76daa52" style={{ width: '55px' }} alt="" />
+                                <p style={{ fontSize: '12px', marginTop: '9px' }}>Hello , <span style={{}}>{"Guest - Login or Signup"}</span></p>
+                            </>
+                        }
+
                         {
                             !context.auth && (<><div className="sameline" style={{ display: 'flex', flexDirection: 'column', marginTop: '9px' }}>
                                 <button onClick={() => navigate('/login')} style={{ width: '250px', color: '#ddd', backgroundColor: 'rgb(56 55 55)', fontFamily: 'Poppins', border: 'none', outline: 'none', cursor: 'pointer', fontSize: '11.75px', padding: '5px 8px', borderRadius: '2px' }}>Login</button>

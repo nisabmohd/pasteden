@@ -10,6 +10,7 @@ import { Footer } from "./Footer";
 import { createContext, useState, useEffect } from "react";
 import {Login} from './Login'
 import {Signup} from './Signup'
+import { User } from "./User";
 
 export const AppContext = createContext(null)
 function App() {
@@ -32,6 +33,7 @@ function App() {
             <Route exact path="/" element={<Paste />} />
             <Route exact path="/login" element={<Login/>} />
             <Route exact path="/signup" element={<Signup/>} />
+            <Route exact path="/user/:uid" element={<User/>} />
             <Route path="/:id" element={<View />} />
           </Routes>
         </div>
