@@ -41,7 +41,6 @@ body {
 textarea {
   resize: none;
   overflow: auto;
-  width: 97%;
   background-color: #2b2b2b;
   color: #ddd;
   height: 70vh;
