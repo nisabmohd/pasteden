@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { AppContext } from './App'
-import logo from './file.png'
+import logo from './note.png'
 export default function Navbar() {
     const context = useContext(AppContext)
     const navigate = useNavigate()
@@ -11,12 +11,12 @@ export default function Navbar() {
     }
 
     return (
-        <div className='navbar' style={{ height: '45px', borderBottom: '1px solid rgb(52 52 52)', backgroundColor: 'rgb(41 41 41)', display: 'flex', alignItems: 'center' }}>
-            <div className="App" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+        <div className='navbar' style={{ height: '50px', backgroundColor: '#252525', display: 'flex', alignItems: 'center' }}>
+            <div className="App" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: '6px' }}>
                 <div className="left" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
                     <Link to='/' style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', color: 'inherit', textDecoration: 'none' }} >
                         <img style={{ width: '32px', marginRight: '9px' }} src={logo} alt="" />
-                        <h3 style={{ letterSpacing: '0.98px' }}>PASTEDEN</h3>
+                        <h3 style={{ letterSpacing: '0.98px' }}>Paste Den</h3>
                     </Link>
                     <Link to='/' style={{ backgroundColor: '#61ba65', color: 'white', border: 'none', outline: 'none', padding: '4.5px 10px', borderRadius: '4px', cursor: 'pointer', fontSize: '11px', marginLeft: '22px', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', textDecoration: 'none' }}><span style={{ fontSize: '14px', fontWeight: 'bold', marginRight: '5px' }}>+</span>paste</Link>
                 </div>
@@ -29,7 +29,7 @@ export default function Navbar() {
                                 </>
                                 :
                                 <>
-                                    <Link to={`/user/${context.auth.username+"="+context.auth.uid}`} style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', textDecoration: 'none', color: 'inherit' }}>
+                                    <Link to={`/user/${context.auth.username + "=" + context.auth.uid}`} style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', textDecoration: 'none', color: 'inherit' }}>
                                         <img src="https://firebasestorage.googleapis.com/v0/b/upload-pics-e599e.appspot.com/o/images%2Fguest.png?alt=media&token=8e691b33-b1ab-451e-b4d2-0257c76daa52" style={{ width: '30px', marginRight: '15px' }} alt="" />
                                         <p className='hide' style={{ fontSize: '12px', marginTop: '0px' }}>Hello , <span style={{}}>{context.auth.username}</span></p>
                                     </Link>

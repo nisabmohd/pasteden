@@ -18,6 +18,7 @@ body {
   background-color: #2b2b2b;
   color: #ddd;
 }
+
 * {
   margin: 0;
   padding: 0;
@@ -33,7 +34,7 @@ body {
 }
 
 .App {
-  width: 60%;
+  width: 81.25%;
   margin: auto;
 }
 
@@ -43,7 +44,7 @@ textarea {
   width: 97%;
   background-color: #2b2b2b;
   color: #ddd;
-  height: 40vh;
+  height: 70vh;
   border: 1px solid rgb(52 52 52);
   outline: none;
   padding: 12px;
@@ -72,13 +73,13 @@ input {
 }
 
 .bg-dark {
-  width: 58.5%;
+  width: 80%;
   background-color: #252525;
   padding: 18px;
   margin-bottom: 25px;
-  border-left: 1px solid rgb(52 52 52);
-  border-right: 1px solid rgb(52 52 52);
-  border-bottom: 1px solid rgb(52 52 52);
+  border-radius: 10px;
+  margin-top: 18px;
+  margin-bottom: 22px;
 }
 
 @media screen and (max-width:965px) {
@@ -107,8 +108,9 @@ input {
 
   }
 }
-@media screen and (max-width:494px){
-  .hide{
+
+@media screen and (max-width:494px) {
+  .hide {
     display: none;
   }
 }
