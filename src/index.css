@@ -113,4 +113,26 @@ input {
   .hide {
     display: none;
   }
+
+  input {
+    width: 150px;
+  }
+
+  .bg-dark {
+    padding: 12px;
+  }
+
+  .navbar {
+    padding-left: 10px;
+  }
+
+  .small-txt {
+    font-size: 12px;
+    margin-left: 12px;
+    margin-right: -18px;
+  }
+
+  .resp-mar {
+    margin-left: 3px !important;
+  }
 }
